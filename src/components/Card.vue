@@ -5,9 +5,9 @@
             <img src="/480x480.png" class="card-img" alt="">
         </div>
         <div class="col-sm">
-            <h1>{{ data.nombre }}</h1>
-            <p>{{ data.descripcion }}</p>
-            <p><b>${{ data.precio }}</b></p>
+            <h1>{{ producto.titulo }}</h1>
+            <p>{{ producto.descripcion }}</p>
+            <p><b>${{ producto.precio }}</b></p>
             <hr>
             <form action="">
                 <div class="row w-50">
@@ -31,7 +31,7 @@
 export default {
     name: 'Card',
     props:{
-        data: Object
+        producto: Object
     }
 }
 </script>

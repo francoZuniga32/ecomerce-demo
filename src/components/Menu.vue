@@ -24,7 +24,7 @@
           search
         </span>
       </button>
-      <button class="btn btn-light my-2 my-sm-0"  data-toggle="modal" data-target="#carrito">
+      <button class="btn btn-light my-2 my-sm-0"  data-toggle="modal" data-target="#carrito" v-on:click="actualizarTotal">
         <span class="material-icons">
           shopping_cart
         </span>
@@ -42,7 +42,34 @@
         </button>
       </div>
       <div class="modal-body">
-        
+        <!-- media -->
+      <div v-for="(producto, i) in carrito" v-bind:key="i" class="media mb-1">
+        <img v-bind:src="producto.media" width="20%" class="mr-3" alt="...">
+        <div class="media-body">
+          <h5 class="mt-0">{{ producto.titulo }}</h5>
+            <b>${{ producto.precio }}</b>
+            <br>
+            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-secondary" v-on:click="decrement(i)">
+                <span class="material-icons">
+                  remove
+                </span>
+              </button>
+              <button type="button" class="btn btn-secondary">
+                <input class="form-control" width="20%" type="number" name="" id="" min="0" max="" v-on:change="actualizarTotal" v-bind:value="producto.cantidad">
+              </button>
+              <button type="button" class="btn btn-secondary" v-on:click="increment(i)">
+                <span class="material-icons">
+                add
+                </span>
+              </button>
+            </div>
+            {{ producto.cantidad }}
+          </div>
+      </div>
+  
+      <hr>
+      <h5 class="mt-0"><b>Total: </b>${{ total }}</h5>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -55,6 +82,37 @@
 </template>
 <script>
 export default {
-    name: 'menu'
+    name: 'menu',
+    props:{
+      carrito: Array
+    },
+    data(){
+      return{
+        total: 0,
+      }
+    },
+    mounted(){
+      this.actualizarTotal();
+    },
+    methods: {
+      actualizarTotal: function(){
+        this.total = 0;
+        for (var i = 0; i < this.carrito.length; i++){
+          this.total += Math.round10(this.carrito[i].precio * this.carrito[i].cantidad, -2);
+        }
+      },
+      increment: function(id){
+        this.carrito[id].cantidad++;
+        this.actualizarTotal();
+      },
+      decrement: function(id) {
+        this.carrito[id].cantidad --;
+        this.actualizarTotal();
+      },
+      modificar: function(id){
+        this.carrito[id].cantidad++;
+        this.actualizarTotal();
+      }
+    },
 }
 </script>
