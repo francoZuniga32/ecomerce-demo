@@ -10,7 +10,12 @@
             </div>
           </router-link>
           <div class="card-footer text-muted">
-            <button class="btn btn-primary" v-on:click="agregarCarrito">
+            <button v-if="carritoSee" class="btn btn-secondary">
+              <span class="material-icons">
+                add_shopping_cart
+              </span>
+            </button>
+            <button v-else class="btn btn-primary" v-on:click="agregarCarrito">
               <span class="material-icons">
                 add_shopping_cart
               </span>
@@ -27,19 +32,28 @@ export default {
     titulo: String,
     descripcion: String,
     precio: Number,
-    media: String
+    media: String,
+    carrito: Boolean
   },
   data(){
     return {
-      src:null
+      src: "/producto/",
+      carritoSee: false
     }
   },
   mounted(){
-    this.src = "/producto/"+this.id;
+    this.precio = Math.round10(this.precio, -2);
+    this.src += this.id;
+    this.carritoSee = this.carrito;
   },
   methods:{
     agregarCarrito: function(){
+      this.carritoSee = true;
       this.$emit("agregarCarrito",this.id);
+    },
+    eliminarEnCarrito: function(){
+      console.log("eliminando item")
+      this.carritoSee = false;
     }
   }
 }

@@ -7,7 +7,7 @@
         <div class="col-sm">
             <h1>{{ producto.titulo }}</h1>
             <p>{{ producto.descripcion }}</p>
-            <p><b>${{ producto.precio }}</b></p>
+            <p><b>${{ Math.round10(producto.precio, -2) }}</b></p>
             <hr>
             <form action="">
                 <div class="row w-50">
@@ -32,6 +32,9 @@ export default {
     name: 'Card',
     props:{
         producto: Object
+    },
+    methods(){
+        Math.round10(this.producto.precio, -2);
     }
 }
 </script>

@@ -47,9 +47,9 @@
         <img v-bind:src="producto.media" width="20%" class="mr-3" alt="...">
         <div class="media-body">
           <h5 class="mt-0">{{ producto.titulo }}</h5>
-            <b>${{ producto.precio }}</b>
-            <br>
-            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+          <b>${{ producto.precio }}</b>
+          <br>
+          <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
               <button type="button" class="btn btn-secondary" v-on:click="decrement(i)">
                 <span class="material-icons">
                   remove
@@ -63,9 +63,12 @@
                 add
                 </span>
               </button>
-            </div>
-            {{ producto.cantidad }}
           </div>
+          {{ producto.cantidad }}
+        </div>
+        <button type="button" class="close" aria-label="Close" v-on:click="eliminar(i)">
+            <span aria-hidden="true">&times;</span>
+          </button>
       </div>
   
       <hr>
@@ -106,13 +109,19 @@ export default {
         this.actualizarTotal();
       },
       decrement: function(id) {
-        this.carrito[id].cantidad --;
-        this.actualizarTotal();
+        if(this.carrito[id].cantidad > 1){
+          this.carrito[id].cantidad --;
+          this.actualizarTotal();
+        }
       },
       modificar: function(id){
         this.carrito[id].cantidad++;
         this.actualizarTotal();
-      }
+      },
+      eliminar: function(id){
+        this.$emit("eliminarEnCarrito", id);
+        this.actualizarTotal();
+      } 
     },
 }
 </script>
