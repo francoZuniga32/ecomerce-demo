@@ -1,4 +1,4 @@
-# ecomerce-3d-front
+# ecomerce-front
 
 ## Project setup
 ```
